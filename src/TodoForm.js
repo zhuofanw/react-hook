@@ -5,22 +5,22 @@ const useInputValue =  (initialValue) => {
 
     return{
         value,
-        onChange: e => setValue(e.target.value)
+        onChange: e => setValue(e.target.value),
+        resetValue: () => setValue('')
     }
 }
 
-export default () => {
-    const text = useInputValue("nihao");
-    // const email = useInputValue("zhuofan1108@gmail.com");
+export default ({onSubmit}) => {
+    const text = useInputValue("");
     return(
-        <div>
-            <form action="">
-                <input type="text" {...text}/>
-            </form>
-            {/*<input type="text" value={value} onChange={e => setValue(e.target.value)}/>*/} //重构此行代码
+        <form onSubmit={e => {
+            e.preventDefault();
+            onSubmit(text.value);
+            text.resetValue();
+        }}>
+
             <input type="text" {...text}/>
-            {/*<input type="text" {...email}/>*/}
-        </div>
+        </form>
 
 );
 }
